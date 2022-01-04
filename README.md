@@ -1,2 +1,2 @@
 # IPTVPlayerOne
-IPTV player
+An IPTV player
