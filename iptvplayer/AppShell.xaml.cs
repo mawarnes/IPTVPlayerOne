@@ -12,6 +12,7 @@ namespace iptvplayer
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(PlayerPage), typeof(PlayerPage));
+            Routing.RegisterRoute(nameof(ConfigPage), typeof(ConfigPage));
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
         }

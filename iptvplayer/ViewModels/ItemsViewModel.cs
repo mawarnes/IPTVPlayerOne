@@ -30,7 +30,6 @@ namespace iptvplayer.ViewModels
             ItemTapped = new Command<Channel>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
-            downloader = DependencyService.Get<IDownloader>();
         }
 
         async Task ExecuteLoadItemsCommand()

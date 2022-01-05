@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using iptvplayer.ViewModels;
+﻿using iptvplayer.ViewModels;
 using Xamarin.Forms;
 
 namespace iptvplayer.Views
