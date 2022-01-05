@@ -98,15 +98,12 @@ namespace iptvplayer.iOS.Dependencies
                         }
                         else if (!item.Contains("#EXTM3U"))
                         {
-                            var test = new Channel
+                            result.Add(new Channel
                             {
                                 Info = info,
                                 FileLocation = item,
                                 TrackNumber = result.Count + 1
-                            };
-                            result.Add(test);
-                            var thing = test.Name;
-                            
+                            });                           
                         }
                     }
                 }

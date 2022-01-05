@@ -3,8 +3,24 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vlc="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
-    x:Class="iptvplayer.Views.PlayerPage" Disappearing="ContentPage_Disappearing">
+    x:Class="iptvplayer.Views.PlayerPage"
+    Disappearing="ContentPage_Disappearing"
+    BackgroundColor="Black">
     <ContentPage.Content>
-         <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}" />
+         <vlc:MediaPlayerElement
+             EnableRendererDiscovery="True"
+             MediaPlayer="{Binding MediaPlayer}"
+             LibVLC="{Binding LibVLC}"
+             BackgroundColor="Black">
+             <vlc:MediaPlayerElement.PlaybackControls>
+             <vlc:PlaybackControls
+                 IsTracksButtonVisible="False"
+                 MainColor="Black"
+                 IsSeekBarVisible="False"
+                 IsLockButtonVisible="False"
+                 IsCastButtonVisible="True"
+                 IsSeekEnabled="False"/>
+                 </vlc:MediaPlayerElement.PlaybackControls>
+         </vlc:MediaPlayerElement>
     </ContentPage.Content>
 </ContentPage>
