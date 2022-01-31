@@ -33,7 +33,7 @@ namespace iptvplayer.Droid.Dependency
             }
         }
 
-        public Task<List<Channel>> GetM3UChannels(string url)
+        public Task<List<Channel>> GetM3UChannels(Playlist playlist)
         {
             throw new NotImplementedException();
         }

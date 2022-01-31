@@ -14,7 +14,9 @@ namespace iptvplayer
             Routing.RegisterRoute(nameof(PlayerPage), typeof(PlayerPage));
             Routing.RegisterRoute(nameof(ConfigPage), typeof(ConfigPage));
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+            Routing.RegisterRoute(nameof(NewPlaylistPage), typeof(NewPlaylistPage));
+            Routing.RegisterRoute(nameof(ChannelsPage), typeof(ChannelsPage));
+            Routing.RegisterRoute(nameof(PlaylistGroupPage), typeof(PlaylistGroupPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

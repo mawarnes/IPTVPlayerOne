@@ -51,19 +51,18 @@ namespace iptvplayer.iOS.Dependencies
                     {
                         string[] lines = File.ReadAllLines(pathToNewFile, Encoding.UTF8);
                         string info = null;
-                        foreach (var item in lines)
+                        foreach (var line in lines)
                         {
-                            if (item.Contains("#EXTINF"))
+                            if (line.Contains("#EXTINF"))
                             {
-                                info = item;
+                                info = line;
                             }
-                            else if (!item.Contains("#EXTM3U"))
+                            else if (!line.Contains("#EXTM3U"))
                             {
                                 result.Add(new Channel
                                 {
                                     Info = info,
-                                    FileLocation = item,
-                                    TrackNumber = result.Count + 1
+                                    FileLocation = line,
                                 });
                             }
                         }
@@ -73,18 +72,20 @@ namespace iptvplayer.iOS.Dependencies
             }
         }
 
-        public async Task<List<Channel>> GetM3UChannels(string url)
+        public async Task<List<Channel>> GetM3UChannels(Playlist playlist)
         {
             string pathToNewFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "IPTVPlayer");
             Directory.CreateDirectory(pathToNewFolder);
 
             try
             {
-                WebClient webClient = new WebClient();
-                pathToNewFile = Path.Combine(pathToNewFolder, Path.GetFileName(url));
-                webClient.DownloadFile(new Uri(url), pathToNewFile);
+                pathToNewFile = Path.Combine(pathToNewFolder, Path.GetFileName(playlist.Url));
+                if (!File.Exists(pathToNewFile))
+                {
+                    WebClient webClient = new WebClient();
+                    webClient.DownloadFile(new Uri(playlist.Url), pathToNewFile);
+                }
                 var result = new List<Channel>();
-
                 if (!string.IsNullOrEmpty(pathToNewFile))
                 {
                     //okay so we want the url to be the executable for ffmpeg
@@ -98,12 +99,30 @@ namespace iptvplayer.iOS.Dependencies
                         }
                         else if (!item.Contains("#EXTM3U"))
                         {
-                            result.Add(new Channel
+                            var ch=new Channel
                             {
                                 Info = info,
                                 FileLocation = item,
-                                TrackNumber = result.Count + 1
-                            });                           
+                                PlaylistId = playlist.Id
+                            };
+                            try
+                            {
+                                if (!string.IsNullOrEmpty(ch.TvgLogo))
+                                {
+                                    pathToNewFile = Path.Combine(pathToNewFolder, Path.GetFileName(ch.TvgLogo));
+                                    if (!File.Exists(pathToNewFile))
+                                    {
+                                        WebClient webClient = new WebClient();
+                                        webClient.DownloadFileAsync(new Uri(ch.TvgLogo), pathToNewFile);
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                //oh oh 
+                            }
+
+                            result.Add(ch);
                         }
                     }
                 }

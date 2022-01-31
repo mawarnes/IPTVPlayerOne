@@ -1,57 +1,78 @@
 ﻿using System;
 using System.Linq;
+using SQLite;
 
 namespace iptvplayer.Models
 {
-    public class Channel
+    public class Channel:DbEntity
     {
-        public int TrackNumber { get; set; }
         public string FileLocation { get; set; }
         public string Info { get; set; }
 
-        private string name;
-        public string Name
+        private string tvgName;
+        public string TvgName
         {
             get
             {
-                if (name == null)
-                    name = ExtractInfo("tvg-name=");
-                return name;
+                if (tvgName == null)
+                    tvgName = ExtractInfo("tvg-name=");
+                return tvgName;
+            }
+            set { tvgName = value; }
+        }
+
+        private string description;
+        public string Description
+        {
+            get
+            {
+                if (description == null)
+                    description = Info.Split(',').LastOrDefault();
+                return string.IsNullOrEmpty(TvgName) ? description : TvgName;
+            }
+            set { description = value; }
+        }
+
+        private string tvgId;
+        public string TvgId
+        {
+            get
+            {
+                if (tvgId == null)
+                    tvgId = ExtractInfo("tvg-id=");
+                return tvgId;
             }
         }
 
-        private string id;
-        public string Id
+        private string tvgLogo;
+        public string TvgLogo
         {
             get
             {
-                if (id == null)
-                    id = ExtractInfo("tvg-id=");
-                return id;
+                if (tvgLogo == null)
+                    tvgLogo = ExtractInfo("tvg-logo=");
+                return tvgLogo;
             }
+            set { tvgLogo = value; }
         }
 
-        private string logo;
-        public string Logo
+        public string LogoFileName => TvgLogo.Split('/').Last();
+
+        private string groupName;
+        public string GroupName
         {
             get
             {
-                if (logo == null)
-                    logo = ExtractInfo("tvg-logo=");
-                return logo;
+                if (groupName == null)
+                    groupName = ExtractInfo("group-title=");
+                return groupName;
             }
+            set {
+                groupName = value; }
         }
 
-        private string group;
-        public string Group
-        {
-            get
-            {
-                if (group == null)
-                    group = ExtractInfo("group-title=");
-                return group;
-            }
-        }
+        [Indexed]
+        public int PlaylistId { get; set; }
 
         public Channel()
         {

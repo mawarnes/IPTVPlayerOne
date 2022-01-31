@@ -5,6 +5,7 @@ using Xamarin.Forms;
 namespace iptvplayer.ViewModels
 {
     [QueryProperty(nameof(ChannelURL), nameof(ChannelURL))]
+    [QueryProperty(nameof(Title), nameof(Title))]
     public class PlayerViewModel:BaseViewModel
     {
 

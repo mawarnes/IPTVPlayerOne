@@ -1,8 +1,6 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 using iptvplayer.Services;
-using iptvplayer.Views;
+using iptvplayer.Models;
 
 namespace iptvplayer
 {
@@ -12,8 +10,8 @@ namespace iptvplayer
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
+            DependencyService.Register<IPlaylistService,PlaylistService>();
+            DependencyService.Register<IChannelService, ChannelService>();
             MainPage = new AppShell();
         }
 

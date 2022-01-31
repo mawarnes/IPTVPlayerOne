@@ -1,6 +1,7 @@
-﻿using System.ComponentModel;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using iptvplayer.ViewModels;
+using iptvplayer.Services;
+using iptvplayer.Models;
 
 namespace iptvplayer.Views
 {
@@ -9,7 +10,7 @@ namespace iptvplayer.Views
         public ItemDetailPage()
         {
             InitializeComponent();
-            BindingContext = new ItemDetailViewModel();
+            BindingContext = new ItemDetailViewModel(DependencyService.Get<IDataService<Playlist>>());
         }
     }
 }

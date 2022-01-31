@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using iptvplayer.Models;
+using iptvplayer.Services;
 using Xamarin.Forms;
 
 namespace iptvplayer.ViewModels
@@ -12,8 +13,12 @@ namespace iptvplayer.ViewModels
 
         private string text;
         private string description;
-        public string Id { get; set; }
+        public int Id { get; set; }
 
+        public ItemDetailViewModel(IDataService<Playlist> dataService)
+        {
+            this.dataService = dataService;
+        }
         public string Text
         {
             get => text;
@@ -26,8 +31,10 @@ namespace iptvplayer.ViewModels
             set => SetProperty(ref description, value);
         }
 
-        private string itemId;
-        public string ItemId
+        private int itemId;
+        private readonly IDataService<Playlist> dataService;
+
+        public int ItemId
         {
             get => itemId;
             set
@@ -37,13 +44,13 @@ namespace iptvplayer.ViewModels
             }
         }
 
-        public async void LoadItemId(string itemId)
+        public async void LoadItemId(int itemId)
         {
             try
             {
-                var item = await DataStore.GetItemAsync(itemId);
+                var item = await dataService.GetById(itemId);
                 Id = item.Id;
-                Text = item.Text;
+                Text = item.Name;
                 Description = item.Description;
             }
             catch (Exception)

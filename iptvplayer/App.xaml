@@ -7,7 +7,13 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="Primary">#777777</Color>
+                <Keyboard x:Key="NoCapitalizationKeyboard"
+              x:FactoryMethod="Create">
+      <x:Arguments>
+        <KeyboardFlags>None</KeyboardFlags>
+      </x:Arguments>
+    </Keyboard>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -29,6 +35,12 @@
             </Style>
             <Style TargetType="ContentPage">
                 <Setter Property="BackgroundColor" Value="Black"></Setter>
+            </Style>
+            <Style x:Key="NoModificationEntry" TargetType="Entry">
+                <Setter Property="FontSize" Value="Medium"></Setter>
+                <Setter Property="IsSpellCheckEnabled" Value="False"></Setter>
+                <Setter Property="IsTextPredictionEnabled" Value="False"></Setter>
+                <Setter Property="Keyboard" Value="{StaticResource NoCapitalizationKeyboard}"></Setter>
             </Style>
         </ResourceDictionary>        
     </Application.Resources>

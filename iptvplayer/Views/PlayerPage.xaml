@@ -5,6 +5,7 @@
     xmlns:vlc="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
     x:Class="iptvplayer.Views.PlayerPage"
     Disappearing="ContentPage_Disappearing"
+    Title="{Binding Title}"
     BackgroundColor="Black">
     <ContentPage.Content>
          <vlc:MediaPlayerElement
@@ -15,10 +16,12 @@
              <vlc:MediaPlayerElement.PlaybackControls>
              <vlc:PlaybackControls
                  IsTracksButtonVisible="False"
-                 MainColor="Black"
+                 ButtonColor="Black"
                  IsSeekBarVisible="False"
                  IsLockButtonVisible="False"
-                 IsCastButtonVisible="True"
+                 IsCastButtonVisible="False"
+                 IsRewindButtonVisible="False"
+                 IsSeekButtonVisible="False"
                  IsSeekEnabled="False"/>
                  </vlc:MediaPlayerElement.PlaybackControls>
          </vlc:MediaPlayerElement>

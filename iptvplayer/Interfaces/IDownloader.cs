@@ -9,7 +9,7 @@ namespace iptvplayer.Interfaces
     public interface IDownloader
     {
         void DownloadFile(string url, string folder);
-        Task<List<Channel>> GetM3UChannels(string url);
+        Task<List<Channel>> GetM3UChannels(Playlist playlist);
         event EventHandler<DownloadEventArgs> OnFileDownloaded;
     }
 }

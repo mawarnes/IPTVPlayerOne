@@ -10,7 +10,7 @@ namespace iptvplayer.ViewModels
         public AboutViewModel()
         {
             Title = "About";
-            OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://aka.ms/xamarin-quickstart"));
+            OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://www.warnes.com"));
         }
 
         public ICommand OpenWebCommand { get; }
