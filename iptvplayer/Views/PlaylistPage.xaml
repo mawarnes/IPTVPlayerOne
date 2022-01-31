@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:iptvplayer.ViewModels"
+    xmlns:models="clr-namespace:iptvplayer.Models"
+    xmlns:fonts="clr-namespace:FontAwesome"
+    x:Class="iptvplayer.Views.PlaylistPage"
+    Title="Playlists">
+
+   <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddPlaylistCommand}" />
+    </ContentPage.ToolbarItems>
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <RefreshView x:DataType="viewModels:PlaylistViewModel"
+                 Command="{Binding LoadPlaylistsCommand}"
+                 Margin="5,5,5,0"
+                 BackgroundColor="White"
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="PlaylistListView"
+                ItemsSource="{Binding Playlists}"     
+                SelectionMode="None"
+                        BackgroundColor="White">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout   ItemSpacing="10" Orientation="Vertical" ></LinearItemsLayout>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>              
+                <DataTemplate>
+                    <Frame HasShadow="True" CornerRadius="5" BackgroundColor="SlateGray" BorderColor="black">
+                    <StackLayout Orientation="Horizontal" x:DataType="models:Playlist" >
+                        <Label Text="{Binding Name}" 
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemTextStyle}"
+                            FontSize="Large"
+                            Padding="5"
+                            HorizontalOptions="StartAndExpand"/>
+                         <ImageButton
+                             Source="{FontImage FontFamily=FAS,Glyph={x:Static fonts:FontAwesomeIcons.Edit}}"
+                             Aspect="AspectFit" 
+                             WidthRequest="30" 
+                             HeightRequest="30"
+                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PlaylistViewModel}}, Path=InfoButtonCommand}"
+                             CommandParameter="{Binding .}"/>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PlaylistViewModel}}, Path=PlaylistTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                        </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

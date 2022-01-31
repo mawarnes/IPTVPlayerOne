@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="iptvplayer.Views.ChannelsPage"
+             Title="{Binding Title}"
+             xmlns:viewModels="clr-namespace:iptvplayer.ViewModels"  
+             xmlns:models="clr-namespace:iptvplayer.Models"
+             xmlns:fonts="clr-namespace:FontAwesome"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             x:Name="BrowseChannelsPage"
+             BackgroundColor="White">
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Reload" Command="{Binding ReloadChannelsCommand}" />
+    </ContentPage.ToolbarItems>-->
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <RefreshView x:DataType="viewModels:ChannelsViewModel"
+                 Command="{Binding LoadItemsCommand}"
+                 Margin="5,5,5,0"
+                 BackgroundColor="White"
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ItemsListView"
+                ItemsSource="{Binding Channels}"     
+                SelectionMode="None"
+                        BackgroundColor="White">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout   ItemSpacing="5" Orientation="Vertical" ></LinearItemsLayout>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                
+                <DataTemplate>
+
+                    <Frame HasShadow="False" CornerRadius="5" BackgroundColor="DarkKhaki" BorderColor="black" HeightRequest="20">
+                    <StackLayout Orientation="Horizontal" x:DataType="models:Channel" >
+                       <Image Source="{Binding TvgLogo}"
+                                      Aspect="AspectFit" 
+                                      WidthRequest="30"/>
+                        <Label Text="{Binding Description}" 
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemTextStyle}"
+                            FontSize="Medium"
+                             VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand"/>
+                         <ImageButton
+                             Source="{FontImage FontFamily=FAS,Glyph={x:Static fonts:FontAwesomeIcons.InfoCircle}}"
+                             Aspect="AspectFit" 
+                             WidthRequest="30" 
+                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ChannelsViewModel}}, Path=LoadItemsCommand}"
+                             CommandParameter="{Binding .}"/>
+
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ChannelsViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                        </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
